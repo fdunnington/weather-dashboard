@@ -2,14 +2,19 @@
     background-color: aliceblue;
 }
 
-#
 
 #forecast {
     background-color: aquamarine;
     display: flex;
     flex-direction: column;
 }
-.card {
+.weatherCard {
     background-color: blue;
     min-height: 100px;
+
+}
+
+.card-body {
+ border: 2px solid black;
+ 
 }
