@@ -2,80 +2,70 @@
 <html lang="en-gb">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="./assets/css/style.css" />
-  <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Weather Dashboard</title>
 </head>
 
 <body>
-  <header class="container-fluid text-center text-white bg-dark p-2 weather-header">
-    <h1>Weather Dashboard</h1>
-  </header>
+    <header class="container-fluid text-center text-white bg-dark p-2 weather-header">
+        <h1>Weather Dashboard</h1>
+    </header>
 
-  <!-- max-width for ultra wide resolutions -->
-  <div class="container-fluid" style="max-width: 1400px">
-    <div class = "row">
-        <aside class="col-lg-3 pb-3">
-            <h2 id="form-heading" class="mt-1 h3 form-label">
-            Search for a City:
-            </h2>
-            <form id="search-form" class="form">
-            <div class="form-inline form-group">
-                <div class="input-group">
-                <input class="form-input weather-search" type="text" id="search-input" placeholder="London"
-                    aria-labelledby="form-heading" aria-controls="today forecast" />
-                <div class="input-group-append">
-                    <button type="submit" class="btn search-button" id="search-button" aria-label="submit search">
-                    Search
-                    </button>
-                    <span id="error"></span>
-                    <hr class="hr weather-hr" />
-                </div>
-                </div>
-            </div>
-            </form>
-            <hr>
-            <div class="list-group" id="history"></div>
-        </aside> 
-
-        <div class="col-lg-9 pb-3">
-            <section id="today" class="mt-3 container" role="region" aria-live="polite">
-                <h2 id="chosen-location"><span id="todays-date"></span></h2>
-                <p>Temperature: <span id="current-temp"></span></p>
-                <p>Wind: <span id="current-wind"></span></p>
-                <p>Humidity: <span id="current-humidity"></span></p>
-            </section>
-            <section id="forecast" class="mt-3 container" role="region" aria-live="polite">
-                <div class="row">
-                    <h2>5 Day Forecast</h2>
-                </div>
-                                
-                <div class="row">
-                    <div class="card" style="width: 20%;">
-                        <h5 class="day">Day</h5>
-                        <img id="weather-image" src="..." alt="">
-                        <div class="card-body">
-                            <p class="card-text">Temperature: <span class="temp"></span></p>
-                            <p class="card-text">Wind: <span class="wind"></span></p>
-                            <p class="card-text">Humidity: <span class="humidity"></span></p>
+    <!-- max-width for ultra wide resolutions -->
+    <div class="container-fluid" style="max-width: 1400px">
+        <div class="row">
+            <aside class="col-lg-3 pb-3">
+                <h2 id="form-heading" class="mt-1 h3 form-label">
+                    Search for a City:
+                </h2>
+                <form id="search-form" class="form">
+                    <div class="form-inline form-group">
+                        <div class="input-group">
+                            <input class="form-input weather-search" type="text" id="search-input" placeholder="London"
+                                aria-labelledby="form-heading" aria-controls="today forecast" />
+                            <div class="input-group-append">
+                                <button type="submit" class="btn search-button" id="search-button"
+                                    aria-label="submit search">
+                                    Search
+                                </button>
+                                <span id="error"></span>
+                                <hr class="hr weather-hr" />
+                            </div>
                         </div>
-                      </div>
-                </div>
-            </section>
+                    </div>
+                </form>
+                <hr>
+                <div class="list-group" id="history"></div>
+            </aside>
+
+            <div class="col-lg-9 pb-3">
+                <section id="today" class="mt-3 container" role="region" aria-live="polite">
+                    <h2><span id="chosen-location"></span><span id="todays-date"></span></h2>
+                    <p>Temperature: <span id="current-temp"></span></p>
+                    <p>Wind: <span id="current-wind"></span></p>
+                    <p>Humidity: <span id="current-humidity"></span></p>
+                </section>
+                <section id="forecast" class="mt-3 container" role="region" aria-live="polite">
+
+                    <h3>5 Day Forecast</h3>
+                    <div class="card-text row text-light" id="weather-forecast"></div>                
+
+                </section>
+            </div>
         </div>
     </div>
-  </div>
 
-  <!-- Moment.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-  <!-- jQuery -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="./assets/scripts/script.js"></script>
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./assets/scripts/script.js"></script>
 </body>
 
 </html>
