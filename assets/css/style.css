@@ -1,0 +1,13 @@
+#today {
+    background-color: aliceblue;
+}
+
+#forecast {
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+}
+.card {
+    background-color: blue;
+    min-height: 100px;
+}
