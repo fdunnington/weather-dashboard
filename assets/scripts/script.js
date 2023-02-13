@@ -1,108 +1,121 @@
 
 $(document).ready(function() {
 
-    //function to show saved city button after refresh
+    const apiKey = "82b225f1a74acfbe188e326f3d399e83";
+    var cityID = $("#search-input").val();
+    localStorage.setItem("cityName", cityID);
+    const queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=";
+    // const tempID = $(".temp");
+    // const windData = $(".wind");
+    // const humidity = $(".humidity");
+    // const weatherIcon = $("#weather-image");
+    const today = moment().format("ddd DD MMM YYYY");
+    const forecast = $("#forecast");
+    var cities = [];
+
+    console.log
+
 
     //-------------------------------------------------    
     //event listener for submit button
     //-------------------------------------------------
-  
-   
+
     $("#search-button").on("click", function(event){
+
+
+        if (cityID !== "") {
+           // localStorage.setItem("City", cityID);
+            // localStorage.setItem("Lat", lat);
+            // localStorage.setItem("Lon", lon);
+        } else {
+            alert("Type in a city name and hit search");
+        };            
+
         event.preventDefault();
         todaysData();
         getForecast();
-        //saveCity();
-    }); 
+        
 
-    const queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=";
-    //const apiKey = "82b225f1a74acfbe188e326f3d399e83";
-    var cityID = $("#search-input").val().trim();
-    
-    const tempID = $(".temp");
-    const windData = $(".wind");
-    const humidity = $(".humidity");
-    const weatherIcon = $("#weather-image");
-    const today = moment().format("ddd DD MMM YYYY");
-    const forecast = $("#forecast");
+    });  
 
 
-    console.log(cityID);
     //-------------------------------------------------
     //pull and display todays data in #today
     //-------------------------------------------------
     function todaysData() {
+        
         $.ajax({
-            url: queryURL + cityID + "&appid=82b225f1a74acfbe188e326f3d399e83&units=metric", 
+            url: queryURL + cityID + "&appid=" + apiKey + "&units=metric", 
             method: "GET"
         }).then(function(data) {
-            console.log(data);
-
-            //-------------------------------------------------
-            //pull and display todays data in #today
-            //-------------------------------------------------
-            const today = moment().format("ddd DDD MMM YYYY");
-            $("#chosen-location").text(data.city.name + " (" + today + ") ");
-            $("#current-temp").text(data.list['0'].main.temp + "°C");
-            $("#current-wind").text(data.list['0'].wind.speed + "mps");
-            $("#current-humidity").text(data.list['0'].main.humidity  + "%");
-
             
+
+            const today = moment().format("D MMM YYYY");
+            $("#chosen-location").text(cityID + " (" + today + ") ");
+            $("#current-temp").text(data.list[0].main.temp + "°C");
+            $("#current-wind").text(data.list[0].wind.speed + "mps");
+            $("#current-humidity").text(data.list[0].main.humidity  + "%");
+
         });
+
     };
 
     //-------------------------------------------------
     //pull and display data in #forecast
     //-------------------------------------------------
     function getForecast() {
-        //clear for new search result
-        $("#weather-forecast").html("");
+
+       
+
         $.ajax({
-            url: queryURL + cityID + "&appid=82b225f1a74acfbe188e326f3d399e83&units=metric", 
+            url: queryURL + cityID + "&appid=" + apiKey + "&units=metric", 
             method: "GET"
         }).then(function(data) {
-
             var forecastData = data.list;
             console.log(forecastData);
+            const newData = [];
 
-            //divide by 8 since API updates weather every 3 hours a day
-            for (var i = 1; i <= forecastData.length / 8; i++) {
+            function getEvery8th() {                    
+                const maxVal = 5;
+                const every8th = Math.floor((forecastData.length) / maxVal);
+                
+                for (i = 0; i < forecastData.length; i+=every8th) {
+                    newData.push(forecastData[i]);                  
+                }
 
-                var getIcon = forecastData[i * 7].weather[0].icon;
-
-                //get epoch time and convert to date
-                var getForDate = forecastData[i * 4].dt * 1000;
-                var getWeatherDate = new Date(getForDate).getDate();
-                var getWeatherMonth = new Date(getForDate).getMonth();
-                var getWeatherYear = new Date(getForDate).getFullYear();
-
-                var getForTemp = forecastData[i * 4].main.temp;
-                var getForHum = forecastData[i * 4].main.humidity;
-
-
+            };
+            getEvery8th()
+            
+            console.log(newData.length);
+            for (var i = 0; i <= newData.length; i++) {
+                
                 //create card body
-                var weatherCard = $('<div>').attr({ "class": "card bg-info shadow m-4 flex-container" });
-
+                var forecastDiv = $("#weather-forecast");
+                // var weatherForecast = $('<div>');
+                // var weatherCard = $('<div>');
+                // var weatherIcon = $("<p>").append(iconURL);
+                var IconID = newData[i].weather[0].icon;
+                console.log(newData);
+                var iconURL = $('<img>').attr({ "src": "https://openweathermap.org/img/w/" + IconID + ".png" });
+                // var weatherIcon = $("<img>").append(iconURL);
+            
                 var weatherForecast = $('<div>').attr({ "class": "card-body" });
-                var iconURL = $('<img>').attr({ "src": "https://openweathermap.org/img/w/" + getIcon + ".png" });
 
-                var weatherForDate = $('<p>').html(getWeatherMonth + "/" + getWeatherDate + "/" + getWeatherYear);
+                var forecastTemp = $('<p>').text("Temp: " + (newData[i].main.temp).toFixed(0) + "°C");
+                var forecastWind = $('<p>').text("Wind: " + (Number(newData[i].wind.speed) * 1.94384).toFixed(2) + "kts");
+                var forecastHumidity = $('<p>').text("Humidity: " + newData[i].main.humidity  + "%");
 
+                console.log((newData[i].main.temp).toFixed(0) + "°C");
 
-                var weatherIcon = $("<p>").append(iconURL);
+                forecastDiv.append(weatherForecast);
+                weatherForecast.append(iconURL, forecastTemp, forecastWind, forecastHumidity);
 
-                var forecastTemp = $('<p>').text("Temp: " + (data.list[i].main.temp).toFixed(0) + "°C");
-                var forecastWind = $('<p>').text("Wind: " + (Number(data.list[i].wind.speed) * 1.94384).toFixed(2) + "kts");
-                var forecastHumidity = $('<p>').text("Humidity: " + data.list[i].main.humidity  + "%");
-
-
-                weatherForecast.append(weatherForDate, weatherIcon, forecastWind, forecastTemp, forecastHumidity);
-
-                weatherCard.append(weatherForecast);
-                $("#weather-forecast").append(weatherCard);
-
-            }
-
-        })
+            };
+        });
     };
+
+
+
+
+
 });
