@@ -31,11 +31,9 @@ $(document).ready(function() {
             newCity = (cities[cities.length-1]);
         };            
 
-        
         todaysData();
         getForecast();
         
-
     });  
 
 
@@ -85,21 +83,19 @@ $(document).ready(function() {
             };
             getEvery8th()
             
-            console.log(newData.length);
+
+            const forecastDiv = $("#weather-forecast");
+            forecastDiv.empty();
             for (var i = 0; i <= newData.length; i++) {
                 
                 //create card body
-                var forecastDiv = $("#weather-forecast");
-                // var weatherForecast = $('<div>');
-                // var weatherCard = $('<div>');
-                // var weatherIcon = $("<p>").append(iconURL);
+
                 var IconID = newData[i].weather[0].icon;
                 console.log(newData);
                 var iconURL = $('<img>').attr({ "src": "https://openweathermap.org/img/w/" + IconID + ".png" });
-                // var weatherIcon = $("<img>").append(iconURL);
             
                 var weatherForecast = $('<div>').attr({ "class": "card-body" });
-
+                
                 var forecastTemp = $('<p>').text("Temp: " + (newData[i].main.temp).toFixed(0) + "°C");
                 var forecastWind = $('<p>').text("Wind: " + (Number(newData[i].wind.speed) * 1.94384).toFixed(2) + "kts");
                 var forecastHumidity = $('<p>').text("Humidity: " + newData[i].main.humidity  + "%");
@@ -108,13 +104,10 @@ $(document).ready(function() {
 
                 forecastDiv.append(weatherForecast);
                 weatherForecast.append(iconURL, forecastTemp, forecastWind, forecastHumidity);
-
+                
             };
         });
     };
-
-
-
 
 
 });
