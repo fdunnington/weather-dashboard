@@ -2,8 +2,8 @@
 $(document).ready(function() {
 
     const apiKey = "82b225f1a74acfbe188e326f3d399e83";
-    var cityID = $("#search-input").val();
-    localStorage.setItem("cityName", cityID);
+    var cities = [];
+
     const queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=";
     // const tempID = $(".temp");
     // const windData = $(".wind");
@@ -11,9 +11,7 @@ $(document).ready(function() {
     // const weatherIcon = $("#weather-image");
     const today = moment().format("ddd DD MMM YYYY");
     const forecast = $("#forecast");
-    var cities = [];
-
-    console.log
+    var newCity;
 
 
     //-------------------------------------------------    
@@ -21,17 +19,19 @@ $(document).ready(function() {
     //-------------------------------------------------
 
     $("#search-button").on("click", function(event){
+        event.preventDefault();
+        let cityID = $("#search-input").val();
+        cities.push(cityID);
+        localStorage.setItem('cityName', cities);
+    
 
-
-        if (cityID !== "") {
-           // localStorage.setItem("City", cityID);
-            // localStorage.setItem("Lat", lat);
-            // localStorage.setItem("Lon", lon);
-        } else {
+        if (cityID === "") {
             alert("Type in a city name and hit search");
+        } else {
+            newCity = (cities[cities.length-1]);
         };            
 
-        event.preventDefault();
+        
         todaysData();
         getForecast();
         
@@ -45,13 +45,13 @@ $(document).ready(function() {
     function todaysData() {
         
         $.ajax({
-            url: queryURL + cityID + "&appid=" + apiKey + "&units=metric", 
+            url: queryURL + newCity + "&appid=" + apiKey + "&units=metric", 
             method: "GET"
         }).then(function(data) {
             
 
             const today = moment().format("D MMM YYYY");
-            $("#chosen-location").text(cityID + " (" + today + ") ");
+            $("#chosen-location").text(newCity + " (" + today + ") ");
             $("#current-temp").text(data.list[0].main.temp + "°C");
             $("#current-wind").text(data.list[0].wind.speed + "mps");
             $("#current-humidity").text(data.list[0].main.humidity  + "%");
@@ -64,11 +64,10 @@ $(document).ready(function() {
     //pull and display data in #forecast
     //-------------------------------------------------
     function getForecast() {
-
-       
+        
 
         $.ajax({
-            url: queryURL + cityID + "&appid=" + apiKey + "&units=metric", 
+            url: queryURL + newCity + "&appid=" + apiKey + "&units=metric", 
             method: "GET"
         }).then(function(data) {
             var forecastData = data.list;
