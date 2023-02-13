@@ -3,13 +3,18 @@ $(document).ready(function() {
 
     const apiKey = "82b225f1a74acfbe188e326f3d399e83";
     var cityID = $("#search-input").val();
+    localStorage.setItem("cityName", cityID);
     const queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=";
-    const tempID = $(".temp");
-    const windData = $(".wind");
-    const humidity = $(".humidity");
-    const weatherIcon = $("#weather-image");
+    // const tempID = $(".temp");
+    // const windData = $(".wind");
+    // const humidity = $(".humidity");
+    // const weatherIcon = $("#weather-image");
     const today = moment().format("ddd DD MMM YYYY");
     const forecast = $("#forecast");
+    var cities = [];
+
+    console.log
+
 
     //-------------------------------------------------    
     //event listener for submit button
@@ -17,36 +22,39 @@ $(document).ready(function() {
 
     $("#search-button").on("click", function(event){
 
+
+        if (cityID !== "") {
+           // localStorage.setItem("City", cityID);
+            // localStorage.setItem("Lat", lat);
+            // localStorage.setItem("Lon", lon);
+        } else {
+            alert("Type in a city name and hit search");
+        };            
+
         event.preventDefault();
         todaysData();
         getForecast();
-        // saveCity();
+        
 
     });  
-        
-    
-    //clear for new search result
 
-
-    //Get data with AJAX request to Openweather API
-    
 
     //-------------------------------------------------
     //pull and display todays data in #today
     //-------------------------------------------------
     function todaysData() {
         
-
         $.ajax({
             url: queryURL + cityID + "&appid=" + apiKey + "&units=metric", 
             method: "GET"
         }).then(function(data) {
+            
 
             const today = moment().format("D MMM YYYY");
-            $("#chosen-location").text(data.city.name + " (" + today + ") ");
-            $("#current-temp").text(data.list[31].main.temp + "°C");
-            $("#current-wind").text(data.list[31].wind.speed + "mps");
-            $("#current-humidity").text(data.list[31].main.humidity  + "%");
+            $("#chosen-location").text(cityID + " (" + today + ") ");
+            $("#current-temp").text(data.list[0].main.temp + "°C");
+            $("#current-wind").text(data.list[0].wind.speed + "mps");
+            $("#current-humidity").text(data.list[0].main.humidity  + "%");
 
         });
 
@@ -56,6 +64,9 @@ $(document).ready(function() {
     //pull and display data in #forecast
     //-------------------------------------------------
     function getForecast() {
+
+       
+
         $.ajax({
             url: queryURL + cityID + "&appid=" + apiKey + "&units=metric", 
             method: "GET"
@@ -83,7 +94,7 @@ $(document).ready(function() {
                 // var weatherForecast = $('<div>');
                 // var weatherCard = $('<div>');
                 // var weatherIcon = $("<p>").append(iconURL);
-                var IconID = newData[i].weather.icon;
+                var IconID = newData[i].weather[0].icon;
                 console.log(newData);
                 var iconURL = $('<img>').attr({ "src": "https://openweathermap.org/img/w/" + IconID + ".png" });
                 // var weatherIcon = $("<img>").append(iconURL);
@@ -102,6 +113,8 @@ $(document).ready(function() {
             };
         });
     };
+
+
 
 
 
