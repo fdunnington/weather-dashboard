@@ -5,9 +5,17 @@
 
 #forecast {
     background-color: rgb(236, 255, 249);
-    display: flex;
-    flex-direction: column;
+    overflow-x: scroll;
 }
+
+.card-text {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    max-width: 100%;
+    overflow-x: scroll;
+}
+
 .weatherCard {
     background-color: blue;
     min-height: 100px;
@@ -16,12 +24,15 @@
 }
 
 .card-body {
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
- border: 2px solid black;
- background-color: #fff;
- color: #000;
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+    border-radius: 3px;
+    background-color: #fff;
+    color: #000;
+    margin: 10px;   
  
 }
