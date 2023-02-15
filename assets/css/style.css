@@ -5,7 +5,6 @@
 }
 
 .page-content {
-
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -52,6 +51,7 @@ input {
 }
 
 .weather-header {
+    display: flex;
     color: white;
     background-color: var(--solidBackground);  
     padding: 3%;
