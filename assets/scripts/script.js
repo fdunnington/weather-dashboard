@@ -5,55 +5,41 @@ $(document).ready(function() {
     var cities = [];
     const queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=";
     const today = moment().format("DD MMM YY");
-    const forecast = $("#forecast");
+    const forecast = $("#forecast"); //delete this?
     var newCity;
     const history = $("#history");
 
-    // for (let i = 0; i <cities.length; i++) {
-    //     console.log(cities);
+//NEW
+    function searchHistory(cities) {
+        localStorage.getItem(JSON.stringify(cities));
 
-    //     var searchedCity = $('<li>').text(cities[i]);
-    //     history.append(searchedCity);
-    //     console.log(searchedCity);
-    // }
+    for (let i = 0; i <cities.length; i++) {
+        console.log(cities);
 
+        var searchedCity = $('<li>').text(cities[i]);
+        history.append(searchedCity);
+        console.log(searchedCity);
+    }
 
-    //-------------------------------------------------    
-    //event listener for submit button
-    //-------------------------------------------------
-    $("#search-button").on("click", function(event){
-        event.preventDefault();
-
-        let cityID = $("#search-input").val();
-        cities.push(cityID);
-        localStorage.setItem('cityName', cities);
-    
-        if (cityID === "") {
-            alert("Type in a city name and hit search");
-        } else {
-            newCity = (cities[cities.length-1]);
-        };            
-
-        todaysData();
-        getForecast();
-        
-    });  
-
-    
-    
+    };
+    searchHistory();
+//end NEW  (plus moved event listener below functions. If not working then move back to top)
+      
 
     //-------------------------------------------------
     //pull and display todays data in #today
     //-------------------------------------------------
     function todaysData() {
-        
+
         $.ajax({
             url: queryURL + newCity + "&appid=" + apiKey + "&units=metric", 
             method: "GET"
-        }).then(function(data) {
-            
-
-            // const today = moment().format("D MMM YY");
+        }).then(function(data) { //add [31] to get 12:00 data? If so then do same on 5day forecast
+//NEW
+            if (newCity === "") {
+                let newCity = "London";  
+            };
+//end NEW
             $("#chosen-location").text(newCity + " (" + today + ") ");
             $("#current-temp").text(data.list[0].main.temp + "°C");
             $("#current-wind").text(data.list[0].wind.speed + "mps");
@@ -63,11 +49,14 @@ $(document).ready(function() {
 
     };
 
+//NEW
+todaysData();
+//end NEW
+
     //-------------------------------------------------
     //pull and display data in #forecast
     //-------------------------------------------------
     function getForecast() {
-        
 
         $.ajax({
             url: queryURL + newCity + "&appid=" + apiKey + "&units=metric", 
@@ -84,8 +73,8 @@ $(document).ready(function() {
                 for (i = 0; i < forecastData.length; i+=every8th) {
                     newData.push(forecastData[i]);                  
                 }
-
             };
+
             getEvery8th()
             
 
@@ -113,5 +102,35 @@ $(document).ready(function() {
             };
         });
     };
+
+    //-------------------------------------------------    
+    //event listener for submit button
+    //-------------------------------------------------
+    $("#search-button").on("click", function(event){
+        event.preventDefault();
+
+        let cityID = $("#search-input").val();
+        cities.push(cityID);
+        localStorage.setItem("cityName", cities); //use if statement to prevent duplicates?
+    
+        if (cityID === "") {
+            alert("Type in a city name and hit search");
+        } else {
+            newCity = (cities[cities.length-1]);
+        };            
+
+        todaysData();
+        getForecast();
+        
+    });
+
+//NEW
+    $(searchedCity).on("click", function(event){
+        let cityID = target.val();
+
+        todaysData();
+        getForecast();
+    });
+//end NEW
 
 });
