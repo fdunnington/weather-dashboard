@@ -1,11 +1,75 @@
-#today {
-    background-color: aliceblue;
+:root {
+    --solidBackground: rgb(17, 17, 34);    
+    --opaqueBackground: rgba(17, 17, 34, 0.6);
+    --duckEgg: rgb(156, 222, 222);
 }
 
+.page-content {
+
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0;
+}
+.main-content {
+    margin: 0 5%;
+}
+
+body {
+    background-image: url("../images/engin-akyurt-gJILnne_HFg-unsplash.webp");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+aside {
+    color: white;
+    background-color:rgb(17, 17, 34);    
+    padding: 3%;
+    height: 100%;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+button {
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 3px;
+    background-color: var(--duckEgg);
+    border: none;
+    font-weight: bold;
+}
+
+input {
+    border-radius: 10px 0 0 10px;
+    border: none;
+    padding-left: 10px;
+}
+.input-group-append {
+    background-color: #eee;
+    border-radius: 0px 10px 10px 0px;
+    color: white;
+}
+
+.weather-header {
+    color: white;
+    background-color: var(--solidBackground);  
+    padding: 3%;
+}
+
+#today {
+    color: white;
+    background-color: var(--opaqueBackground);
+    border-radius: 20px;
+    padding: 3%;
+}
 
 #forecast {
-    background-color: rgb(236, 255, 249);
+    color: var(--solidBackground);    
+    background-color: var(--opaqueBackground);
     overflow-x: scroll;
+    border-radius: 20px;
+    padding: 3%;
 }
 
 .card-text {
@@ -16,12 +80,6 @@
     overflow-x: scroll;
 }
 
-.weatherCard {
-    background-color: blue;
-    min-height: 100px;
-    border-radius: 10px;
-
-}
 
 .card-body {
     min-width: 150px;
@@ -29,10 +87,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 2px solid black;
-    border-radius: 3px;
-    background-color: #fff;
-    color: #000;
+    /* border: 2px solid white; */
+    border-radius: 20px;
+    background-color: var(--opaqueBackground);
+    color: white;
     margin: 10px;   
  
+}
+
+footer {
+    min-height: 30px;
+    background-color: var(--solidBackground);
 }
