@@ -15,10 +15,13 @@ $(document).ready(function() {
     function searchHistory() {
         const cities = JSON.parse(localStorage.getItem("cityName"));
 
-    for (let i = 0; i <cities.length; i++) {
-        var searchedCity = $('<button>').text(cities[i]);
-        history.prepend(searchedCity);
-    }
+        for (let i = 0; i <cities.length; i++) {
+            var searchedCity = $('<button>').text(cities[i]);
+
+            if (cities[i] !== "") {
+            history.prepend(searchedCity);
+            };
+        }
 
     };
     searchHistory();
