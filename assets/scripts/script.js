@@ -15,12 +15,12 @@ $(document).ready(function() {
     function searchHistory() {
         $("#history").empty();
 
-        const myCities = JSON.parse(localStorage.getItem("cityName", cities));
-        console.log(myCities);
+        // localStorage.getItem("cityName");
         for (let i = 0; i < cities.length; i++) {
-
+            myCity = JSON.parse(localStorage.getItem("cityName"));
+            console.log(myCity[i]);
             searchedCity = $("<button>");
-            searchedCity.text(myCities[i]);
+            searchedCity.text(myCity[i]);
             history.prepend(searchedCity);
 
             if (!cities[i] == "") {
