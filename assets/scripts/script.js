@@ -79,7 +79,7 @@ $(document).ready(function() {
                 var weatherForecast = $('<div>').attr({ "class": "card-body"});
                 const forecastTitle = $("#5dayForecast").text("Five day forecast: ");
                 var forecastTemp = $('<p>').text("Temp: " + (newData[i].main.temp).toFixed(0) + "°C");
-                var forecastWind = $('<p>').text("Wind: " + (Number(newData[i].wind.speed) * 1.94384).toFixed(1) + "kts");
+                var forecastWind = $('<p>').text("Wind: " + (Number(newData[i].wind.speed) * 1.94384).toFixed(0) + "kts");
                 var forecastHumidity = $('<p>').text("Humidity: " + newData[i].main.humidity.toFixed(1)  + "%");
 
                 //extract current day from dt property of newData array
