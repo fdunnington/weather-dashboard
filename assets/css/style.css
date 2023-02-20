@@ -85,6 +85,10 @@ button {
     text-transform: capitalize;
 }
 
+.searchedCity {
+    text-transform: capitalize;
+}
+
 #forecast {
     background-color: var(--opaqueBackground);
     overflow-x: scroll;
