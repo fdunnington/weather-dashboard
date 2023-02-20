@@ -17,7 +17,25 @@
     margin: 0 5%;
 }
 
+body {
+    background-image: url("../images/szabo-viktor-28ZbKOWiZfs-unsplash.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/*Header ---------------*/
+.weather-header {
+    display: flex;
+    justify-content: center;
+    color: white;
+    background-color: var(--solidBackground);  
+    padding: 30px;
+}
+
 h1 {
+    background: url("../images/szabo-viktor-28ZbKOWiZfs-unsplash.jpg");/*var(--gradient);*/
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
     text-align: center;
     font-size: 60px;
     padding: 0;
@@ -25,12 +43,7 @@ h1 {
     font-weight:900
 }
 
-body {
-    background-image: url("../images/szabo-viktor-28ZbKOWiZfs-unsplash.jpg");
-    background-size: cover;
-    background-attachment: fixed;
-}
-
+/*Aside ---------------*/
 aside {
     color: white;
     background-color: var(--solidBackground);    
@@ -61,6 +74,13 @@ button:focus {
     color: white;
 }
 
+.searchedCity {
+    text-transform: capitalize;
+}
+
+#search-button {
+    background-color: transparent;
+}
 
 .input-group {
     width: 100%;
@@ -80,14 +100,7 @@ button:focus {
     color: white;
 }
 
-.weather-header {
-    display: flex;
-    justify-content: center;
-    color: white;
-    background-color: var(--solidBackground);  
-    padding: 30px;
-}
-
+/*Todays forecast section ---------------*/
 #today {
     color: white;
     background-color: var(--opaqueBackground);
@@ -99,31 +112,10 @@ button:focus {
     text-transform: capitalize;
 }
 
-
-.searchedCity {
-    text-transform: capitalize;
-}
-
-#forecast {
-    background-color: var(--opaqueBackground);
-    overflow-x: scroll;
-    border-radius: 20px;
-    padding: 30px;
-}
-
 #today h2, #forecast h2 {
     background: url("../images/szabo-viktor-28ZbKOWiZfs-unsplash.jpg");/*var(--gradient);*/
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
-}
-
-h1 {
-    background: url("../images/szabo-viktor-28ZbKOWiZfs-unsplash.jpg");/*var(--gradient);*/
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-}
-.days {
-    font-weight: bold;
 }
 
 #today p {
@@ -139,6 +131,14 @@ h1 {
     font-weight: 100;
     font-size: 20px;
     -webkit-text-fill-color: #eee;
+}
+
+/*5 day forecast section ---------------*/
+#forecast {
+    background-color: var(--opaqueBackground);
+    overflow-x: scroll;
+    border-radius: 20px;
+    padding: 30px;
 }
 
 .card-text {
@@ -166,6 +166,7 @@ h1 {
     width: 100px;
 }
 
+/*Footer section ---------------*/
 footer {
     min-height: 30px;
     background-color: var(--solidBackground);
