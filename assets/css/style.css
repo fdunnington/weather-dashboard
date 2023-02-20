@@ -81,6 +81,10 @@ button {
     padding: 30px;
 }
 
+#chosen-location {
+    text-transform: capitalize;
+}
+
 #forecast {
     background-color: var(--opaqueBackground);
     overflow-x: scroll;
@@ -98,6 +102,9 @@ h1 {
     background: url("../images/szabo-viktor-28ZbKOWiZfs-unsplash.jpg");/*var(--gradient);*/
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
+}
+.days {
+    font-weight: bold;
 }
 
 #today p {
