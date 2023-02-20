@@ -8,6 +8,7 @@ $(document).ready(function() {
     var searchedCity;
     var newCity = "London";
     const history = $("#history");
+    $("#search-input").val('');
 
     //-------------------------------------------------
     //pulls cities array from localStorage and displays as search history (clickable buttons)
