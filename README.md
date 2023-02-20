@@ -1,4 +1,4 @@
-# Module 8 Server-Side APIs: Weather Dashboard\
+# Module 8 Server-Side APIs: Weather Dashboard
 
 ## deployed URL: https://fdunnington.github.io/weather-dashboard/
 
