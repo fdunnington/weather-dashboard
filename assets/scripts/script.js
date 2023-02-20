@@ -20,6 +20,7 @@ $(document).ready(function() {
             myCity = JSON.parse(localStorage.getItem("cityName"));
             searchedCity = $("<button>");
             searchedCity.text(myCity[i]);
+            searchedCity.addClass(searchedCity);
             history.prepend(searchedCity);
         };
 
