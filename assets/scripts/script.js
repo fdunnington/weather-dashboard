@@ -15,18 +15,13 @@ $(document).ready(function() {
     function searchHistory() {
         $("#history").empty();
 
-        // localStorage.getItem("cityName");
         for (let i = 0; i < cities.length; i++) {
             myCity = JSON.parse(localStorage.getItem("cityName"));
-            console.log(myCity[i]);
             searchedCity = $("<button>");
             searchedCity.text(myCity[i]);
             history.prepend(searchedCity);
-
-            if (!cities[i] == "") {
-                
-            };
         };
+
     };
     searchHistory();
       
@@ -38,15 +33,16 @@ $(document).ready(function() {
             url: queryURL + newCity + "&appid=" + apiKey + "&units=metric", 
             method: "GET"
         }).then(function(data) { 
-            if (data.cod === "404") {
-                console.log(data.message);
-                return;
-            }
-            $("#chosen-location").text(newCity);
-            $("#todays-date").text (" (" + today + ") ");
-            $("#current-temp").text(data.list[0].main.temp + "°C");
-            $("#current-wind").text(data.list[0].wind.speed + "mps");
-            $("#current-humidity").text(data.list[0].main.humidity  + "%"); 
+            
+            if (data.status == 200) { 
+                $("#chosen-location").text(newCity);
+                $("#todays-date").text (" (" + today + ") ");
+                $("#current-temp").text(data.list[0].main.temp + "°C");
+                $("#current-wind").text(data.list[0].wind.speed + "mps");
+                $("#current-humidity").text(data.list[0].main.humidity  + "%"); 
+            } else {
+                alert("City name not recognised"); 
+            };
         });
     };
     todaysData();
@@ -62,7 +58,7 @@ $(document).ready(function() {
         }).then(function(data) {
             var forecastData = data.list;
             const newData = [];
-
+           
             //function to take every eigth item from array (original dataset from OpenWeather has 8 x 3hr timeblocks per day). Would like to change code so it shows date for specific time (e.g. midday) irrespective of searched country, but at the moment it shows weather at current time. 
             function getEvery8th() {                    
                 const maxVal = 5;
@@ -90,6 +86,7 @@ $(document).ready(function() {
 
                 //extract current day from dt property of newData array
                 var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+              
                 var d = new Date(newData[i].dt * 1000);
                 var dayName = days[d.getDay()];
                 
@@ -115,14 +112,16 @@ $(document).ready(function() {
         for (i=0; i <cities.length; i++) {
             if (cityID === "") {
                 alert("Type in a city name and hit search");
+                return;
             } else {
                 newCity = cities[i];
+                todaysData();
+                getForecast();
+                searchHistory()
             };  
         };
         
-        todaysData();
-        getForecast();
-        searchHistory()
+        
         
     });
 
@@ -139,6 +138,8 @@ $(document).ready(function() {
         }).then(function(data) {
             todaysData();
             getForecast();
+            //clear input value when history button clicked
+            $("#search-input").val('');
         });
     });
 
