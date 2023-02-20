@@ -14,14 +14,17 @@ $(document).ready(function() {
     //-------------------------------------------------
     function searchHistory() {
         $("#history").empty();
-        
-        const cities = JSON.parse(localStorage.getItem("cityName"));
+
+        const myCities = JSON.parse(localStorage.getItem("cityName", cities));
+        console.log(myCities);
         for (let i = 0; i < cities.length; i++) {
+
             searchedCity = $("<button>");
-            searchedCity.text(cities[i]);
+            searchedCity.text(myCities[i]);
+            history.prepend(searchedCity);
 
             if (!cities[i] == "") {
-                history.prepend(searchedCity);
+                
             };
         };
     };
@@ -34,7 +37,11 @@ $(document).ready(function() {
         $.ajax({
             url: queryURL + newCity + "&appid=" + apiKey + "&units=metric", 
             method: "GET"
-        }).then(function(data) { //add [31] to get 12:00 data? If so then do same on 5day forecast
+        }).then(function(data) { 
+            if (data.cod === "404") {
+                console.log(data.message);
+                return;
+            }
             $("#chosen-location").text(newCity);
             $("#todays-date").text (" (" + today + ") ");
             $("#current-temp").text(data.list[0].main.temp + "°C");
@@ -43,7 +50,7 @@ $(document).ready(function() {
         });
     };
     todaysData();
-console.lo
+
     //-------------------------------------------------
     //pulls and display todays and following 4 days data in #forecast
     //-------------------------------------------------
