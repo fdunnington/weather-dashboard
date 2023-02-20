@@ -33,18 +33,14 @@ $(document).ready(function() {
     function todaysData() {
         $.ajax({
             url: queryURL + newCity + "&appid=" + apiKey + "&units=metric", 
-            method: "GET"
+            method: "GET",
+            dataType: "json",
         }).then(function(data) { 
-            
-            if (data.status == 200) { 
                 $("#chosen-location").text(newCity);
                 $("#todays-date").text (" (" + today + ") ");
-                $("#current-temp").text(data.list[0].main.temp + "°C");
-                $("#current-wind").text(data.list[0].wind.speed + "mps");
-                $("#current-humidity").text(data.list[0].main.humidity  + "%"); 
-            } else {
-                alert("City name not recognised"); 
-            };
+                $("#current-temp").text(data.list[0].main.temp.toFixed(0) + "°C");
+                $("#current-wind").text(Number(data.list[0].wind.speed * 1.94384).toFixed(0) + "kts");
+                $("#current-humidity").text(data.list[0].main.humidity.toFixed(0)  + "%"); 
         });
     };
     todaysData();
@@ -83,8 +79,8 @@ $(document).ready(function() {
                 var weatherForecast = $('<div>').attr({ "class": "card-body"});
                 const forecastTitle = $("#5dayForecast").text("Five day forecast: ");
                 var forecastTemp = $('<p>').text("Temp: " + (newData[i].main.temp).toFixed(0) + "°C");
-                var forecastWind = $('<p>').text("Wind: " + (Number(newData[i].wind.speed) * 1.94384).toFixed(2) + "kts");
-                var forecastHumidity = $('<p>').text("Humidity: " + newData[i].main.humidity  + "%");
+                var forecastWind = $('<p>').text("Wind: " + (Number(newData[i].wind.speed) * 1.94384).toFixed(1) + "kts");
+                var forecastHumidity = $('<p>').text("Humidity: " + newData[i].main.humidity.toFixed(1)  + "%");
 
                 //extract current day from dt property of newData array
                 var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -120,6 +116,7 @@ $(document).ready(function() {
                 todaysData();
                 getForecast();
                 searchHistory()
+                $("#search-input").val('');
             };  
         };
         

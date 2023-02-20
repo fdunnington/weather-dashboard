@@ -2,6 +2,7 @@
     --solidBackground: rgb(17, 17, 34);    
     --opaqueBackground: rgba(17, 17, 34, 0.8);
     --duckEgg: rgb(156, 222, 222);
+    --buttonHover: #00c2c1;
     --gradient: linear-gradient(94deg, rgba(113,158,158,1) 0%, rgba(156,222,222,1) 50%, rgba(207,255,253,1) 75%);
 }
 
@@ -16,7 +17,25 @@
     margin: 0 5%;
 }
 
+body {
+    background-image: url("../images/szabo-viktor-28ZbKOWiZfs-unsplash.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/*Header ---------------*/
+.weather-header {
+    display: flex;
+    justify-content: center;
+    color: white;
+    background-color: var(--solidBackground);  
+    padding: 30px;
+}
+
 h1 {
+    background: url("../images/szabo-viktor-28ZbKOWiZfs-unsplash.jpg");/*var(--gradient);*/
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
     text-align: center;
     font-size: 60px;
     padding: 0;
@@ -24,12 +43,7 @@ h1 {
     font-weight:900
 }
 
-body {
-    background-image: url("../images/szabo-viktor-28ZbKOWiZfs-unsplash.jpg");
-    background-size: cover;
-    background-attachment: fixed;
-}
-
+/*Aside ---------------*/
 aside {
     color: white;
     background-color: var(--solidBackground);    
@@ -40,12 +54,32 @@ aside {
 }
 
 button {
+    text-transform: capitalize;
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 3px;
     background-color: var(--duckEgg);
     border: none;
     font-weight: bold;
+}
+
+button:hover {
+    background-color: var(--buttonHover);
+    transition-timing-function: ease-out;
+    transition: 0.3s;
+}
+
+button:focus {
+    background-color: var(--buttonHover);
+    color: white;
+}
+
+.searchedCity {
+    text-transform: capitalize;
+}
+
+#search-button {
+    background-color: transparent;
 }
 
 .input-group {
@@ -66,14 +100,7 @@ button {
     color: white;
 }
 
-.weather-header {
-    display: flex;
-    justify-content: center;
-    color: white;
-    background-color: var(--solidBackground);  
-    padding: 30px;
-}
-
+/*Todays forecast section ---------------*/
 #today {
     color: white;
     background-color: var(--opaqueBackground);
@@ -85,30 +112,10 @@ button {
     text-transform: capitalize;
 }
 
-.searchedCity {
-    text-transform: capitalize;
-}
-
-#forecast {
-    background-color: var(--opaqueBackground);
-    overflow-x: scroll;
-    border-radius: 20px;
-    padding: 30px;
-}
-
 #today h2, #forecast h2 {
     background: url("../images/szabo-viktor-28ZbKOWiZfs-unsplash.jpg");/*var(--gradient);*/
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
-}
-
-h1 {
-    background: url("../images/szabo-viktor-28ZbKOWiZfs-unsplash.jpg");/*var(--gradient);*/
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-}
-.days {
-    font-weight: bold;
 }
 
 #today p {
@@ -124,6 +131,14 @@ h1 {
     font-weight: 100;
     font-size: 20px;
     -webkit-text-fill-color: #eee;
+}
+
+/*5 day forecast section ---------------*/
+#forecast {
+    background-color: var(--opaqueBackground);
+    overflow-x: scroll;
+    border-radius: 20px;
+    padding: 30px;
 }
 
 .card-text {
@@ -151,6 +166,7 @@ h1 {
     width: 100px;
 }
 
+/*Footer section ---------------*/
 footer {
     min-height: 30px;
     background-color: var(--solidBackground);
