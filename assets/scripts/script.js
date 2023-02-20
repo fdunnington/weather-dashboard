@@ -24,6 +24,8 @@ $(document).ready(function() {
             history.prepend(searchedCity);
         };
 
+        return;
+
     };
     searchHistory();
       
@@ -42,6 +44,8 @@ $(document).ready(function() {
                 $("#current-wind").text(Number(data.list[0].wind.speed * 1.94384).toFixed(0) + "kts");
                 $("#current-humidity").text(data.list[0].main.humidity.toFixed(0)  + "%"); 
         });
+
+        return;
     };
     todaysData();
 
@@ -65,6 +69,8 @@ $(document).ready(function() {
                 for (i = 0; i < forecastData.length; i+=every8th) {
                     newData.push(forecastData[i]);                  
                 }
+
+                return;
             };
             getEvery8th()
             
@@ -93,6 +99,7 @@ $(document).ready(function() {
                 weatherForecast.append(dayName, iconURL, forecastTemp, forecastWind, forecastHumidity);
             };
 
+        return;
 
         });
     };
