@@ -1,52 +1,51 @@
-
 $(document).ready(function() {
 
     const apiKey = "82b225f1a74acfbe188e326f3d399e83";
-    var cities = [];
     const queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=";
     const today = moment().format("DD MMM YY");
-    // const forecast = $("#forecast"); //delete this?
+    var cityID;
+    var cities = [];
+    var searchedCity;
     var newCity = "London";
     const history = $("#history");
 
-
-
-//NEW
+    //-------------------------------------------------
+    //pulls cities array from localStorage and displays as search history (clickable buttons)
+    //-------------------------------------------------
     function searchHistory() {
+        $("#history").empty();
+        
         const cities = JSON.parse(localStorage.getItem("cityName"));
+        for (let i = 0; i < cities.length; i++) {
+            searchedCity = $("<button>");
+            searchedCity.text(cities[i]);
 
-        for (let i = 0; i <cities.length; i++) {
-            var searchedCity = $('<button>').text(cities[i]);
-
-            if (cities[i] !== "") {
-            history.prepend(searchedCity);
+            if (!cities[i] == "") {
+                history.prepend(searchedCity);
             };
-        }
-
+        };
     };
     searchHistory();
-//end NEW  (plus moved event listener below functions. If not working then move back to top)
       
-
     //-------------------------------------------------
-    //pull and display todays data in #today
+    //pulls and display todays data in #today
     //-------------------------------------------------
     function todaysData() {
         $.ajax({
             url: queryURL + newCity + "&appid=" + apiKey + "&units=metric", 
             method: "GET"
         }).then(function(data) { //add [31] to get 12:00 data? If so then do same on 5day forecast
-                $("#chosen-location").text(newCity + " (" + today + ") ");
-                $("#current-temp").text(data.list[0].main.temp + "°C");
-                $("#current-wind").text(data.list[0].wind.speed + "mps");
-                $("#current-humidity").text(data.list[0].main.humidity  + "%"); 
+            $("#chosen-location").text(newCity);
+            $("#todays-date").text (" (" + today + ") ");
+            $("#current-temp").text(data.list[0].main.temp + "°C");
+            $("#current-wind").text(data.list[0].wind.speed + "mps");
+            $("#current-humidity").text(data.list[0].main.humidity  + "%"); 
         });
     };
-
     todaysData();
-
+console.lo
     //-------------------------------------------------
-    //pull and display data in #forecast
+    //pulls and display todays and following 4 days data in #forecast
     //-------------------------------------------------
     function getForecast() {
 
@@ -57,6 +56,7 @@ $(document).ready(function() {
             var forecastData = data.list;
             const newData = [];
 
+            //function to take every eigth item from array (original dataset from OpenWeather has 8 x 3hr timeblocks per day). Would like to change code so it shows date for specific time (e.g. midday) irrespective of searched country, but at the moment it shows weather at current time. 
             function getEvery8th() {                    
                 const maxVal = 5;
                 const every8th = Math.floor((forecastData.length) / maxVal);
@@ -65,62 +65,74 @@ $(document).ready(function() {
                     newData.push(forecastData[i]);                  
                 }
             };
-
             getEvery8th()
             
-
             const forecastDiv = $("#weather-forecast");
+            //empty weather-forecast div so new data only shown each time a search is requested
             forecastDiv.empty();
-            for (var i = 0; i <= newData.length; i++) {
-                
-                //create card body
 
+            for (let i = 0; i <= newData.length; i++) {
+                //create elements for card body
                 var IconID = newData[i].weather[0].icon;
                 var iconURL = $('<img>').attr({ "src": "https://openweathermap.org/img/w/" + IconID + ".png" });
-            
                 var weatherForecast = $('<div>').attr({ "class": "card-body"});
-                var forecastTitle = $("#5dayForecast").text("Five day forecast: ");
+                const forecastTitle = $("#5dayForecast").text("Five day forecast: ");
                 var forecastTemp = $('<p>').text("Temp: " + (newData[i].main.temp).toFixed(0) + "°C");
                 var forecastWind = $('<p>').text("Wind: " + (Number(newData[i].wind.speed) * 1.94384).toFixed(2) + "kts");
                 var forecastHumidity = $('<p>').text("Humidity: " + newData[i].main.humidity  + "%");
 
-
-                forecastDiv.append(weatherForecast);
-                weatherForecast.append(iconURL, forecastTemp, forecastWind, forecastHumidity);
+                //extract current day from dt property of newData array
+                var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                var d = new Date(newData[i].dt * 1000);
+                var dayName = days[d.getDay()];
                 
+                //append required info to card body
+                forecastDiv.append(weatherForecast);
+                weatherForecast.append(dayName, iconURL, forecastTemp, forecastWind, forecastHumidity);
             };
+
+
         });
     };
 
     //-------------------------------------------------    
-    //event listener for submit button
+    //event listener for submit button: sets CityID (for 5 day forecast and todays data), and pushes input cityname to [cities], and
     //-------------------------------------------------
     $("#search-button").on("click", function(event){
         event.preventDefault();
 
-        let cityID = $("#search-input").val();
+        cityID = $("#search-input").val().trim().toLowerCase();
         cities.push(cityID);
-        localStorage.setItem("cityName", JSON.stringify(cities)); //use if statement to prevent duplicates?
-    
-        if (cityID === "") {
-            alert("Type in a city name and hit search");
-        } else {
-            newCity = (cities[cities.length-1]);
-        };            
-
+        localStorage.setItem("cityName", JSON.stringify(cities)); 
+       
+        for (i=0; i <cities.length; i++) {
+            if (cityID === "") {
+                alert("Type in a city name and hit search");
+            } else {
+                newCity = cities[i];
+            };  
+        };
+        
         todaysData();
         getForecast();
         searchHistory()
         
     });
 
-//NEW
-    $(searchedCity).on("click", function(event){
-        cityID = event.target.text("");
-
-        todaysData();
-        getForecast();
+    //-------------------------------------------------
+    //allows search history buttons to be used to re-conduct search for that city
+    //-------------------------------------------------
+    $("#history").on("click", function(event){
+        //sets newCity (and therefore OpenWeather city parameter) to the text of the clicked button
+        newCity = $(event.target).text();
+              
+        $.ajax({
+          url: queryURL + newCity + "&appid=" + apiKey + "&units=metric",
+          method: "GET"
+        }).then(function(data) {
+            todaysData();
+            getForecast();
+        });
     });
-//end NEW
 
 });

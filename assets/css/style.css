@@ -1,7 +1,8 @@
 :root {
     --solidBackground: rgb(17, 17, 34);    
-    --opaqueBackground: rgba(17, 17, 34, 0.6);
+    --opaqueBackground: rgba(17, 17, 34, 0.8);
     --duckEgg: rgb(156, 222, 222);
+    --gradient: linear-gradient(94deg, rgba(113,158,158,1) 0%, rgba(156,222,222,1) 50%, rgba(207,255,253,1) 75%);
 }
 
 .page-content {
@@ -15,19 +16,27 @@
     margin: 0 5%;
 }
 
+h1 {
+    text-align: center;
+    font-size: 60px;
+    padding: 0;
+    margin: 0;
+    font-weight:900
+}
+
 body {
-    background-image: url("../images/engin-akyurt-gJILnne_HFg-unsplash.webp");
+    background-image: url("../images/szabo-viktor-28ZbKOWiZfs-unsplash.jpg");
     background-size: cover;
     background-attachment: fixed;
 }
 
 aside {
     color: white;
-    background-color:rgb(17, 17, 34);    
-    padding: 3%;
+    background-color: var(--solidBackground);    
+    padding: 30px;
     height: 100%;
     border-radius: 20px;
-    margin-top: 20px;
+    margin: 20px 0;
 }
 
 button {
@@ -39,12 +48,19 @@ button {
     font-weight: bold;
 }
 
-input {
+.input-group {
+    width: 100%;
+}
+
+.form-input {
+    width: 75%;
     border-radius: 10px 0 0 10px;
     border: none;
     padding-left: 10px;
 }
+
 .input-group-append {
+    width: 25%;
     background-color: #eee;
     border-radius: 0px 10px 10px 0px;
     color: white;
@@ -52,24 +68,51 @@ input {
 
 .weather-header {
     display: flex;
+    justify-content: center;
     color: white;
     background-color: var(--solidBackground);  
-    padding: 3%;
+    padding: 30px;
 }
 
 #today {
     color: white;
     background-color: var(--opaqueBackground);
     border-radius: 20px;
-    padding: 3%;
+    padding: 30px;
 }
 
 #forecast {
-    color: var(--solidBackground);    
     background-color: var(--opaqueBackground);
     overflow-x: scroll;
     border-radius: 20px;
-    padding: 3%;
+    padding: 30px;
+}
+
+#today h2, #forecast h2 {
+    background: url("../images/szabo-viktor-28ZbKOWiZfs-unsplash.jpg");/*var(--gradient);*/
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+h1 {
+    background: url("../images/szabo-viktor-28ZbKOWiZfs-unsplash.jpg");/*var(--gradient);*/
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+#today p {
+    font-weight: bold;
+}
+
+#today p span {
+    font-weight: normal;
+    color: #eee;
+}
+
+#todays-date {
+    font-weight: 100;
+    font-size: 20px;
+    -webkit-text-fill-color: #eee;
 }
 
 .card-text {
@@ -92,7 +135,10 @@ input {
     background-color: var(--opaqueBackground);
     color: white;
     margin: 10px;   
- 
+}
+
+.card-body img {
+    width: 100px;
 }
 
 footer {
