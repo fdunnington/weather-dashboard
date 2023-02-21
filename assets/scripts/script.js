@@ -3,10 +3,10 @@ $(document).ready(function() {
     const apiKey = "82b225f1a74acfbe188e326f3d399e83";
     const queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=";
     const today = moment().format("DD MMM YY");
-    var cityID;
-    var cities = [];
-    var searchedCity;
-    var newCity = "London";
+    let cityID;
+    let cities = [];
+    let searchedCity;
+    let newCity = "London";
     const history = $("#history");
     $("#search-input").val('');
 
@@ -58,7 +58,7 @@ $(document).ready(function() {
             url: queryURL + newCity + "&appid=" + apiKey + "&units=metric", 
             method: "GET"
         }).then(function(data) {
-            var forecastData = data.list;
+            const forecastData = data.list;
             const newData = [];
            
             //function to take every eigth item from array (original dataset from OpenWeather has 8 x 3hr timeblocks per day). Would like to change code so it shows date for specific time (e.g. midday) irrespective of searched country, but at the moment it shows weather at current time. 
@@ -80,19 +80,19 @@ $(document).ready(function() {
 
             for (let i = 0; i <= newData.length; i++) {
                 //create elements for card body
-                var IconID = newData[i].weather[0].icon;
-                var iconURL = $('<img>').attr({ "src": "https://openweathermap.org/img/w/" + IconID + ".png" });
-                var weatherForecast = $('<div>').attr({ "class": "card-body"});
+                const IconID = newData[i].weather[0].icon;
+                const iconURL = $('<img>').attr({ "src": "https://openweathermap.org/img/w/" + IconID + ".png" });
+                const weatherForecast = $('<div>').attr({ "class": "card-body"});
                 const forecastTitle = $("#5dayForecast").text("Five day forecast: ");
-                var forecastTemp = $('<p>').text("Temp: " + (newData[i].main.temp).toFixed(0) + "°C");
-                var forecastWind = $('<p>').text("Wind: " + (Number(newData[i].wind.speed) * 1.94384).toFixed(0) + "kts");
-                var forecastHumidity = $('<p>').text("Humidity: " + newData[i].main.humidity.toFixed(1)  + "%");
+                const forecastTemp = $('<p>').text("Temp: " + (newData[i].main.temp).toFixed(0) + "°C");
+                const forecastWind = $('<p>').text("Wind: " + (Number(newData[i].wind.speed) * 1.94384).toFixed(0) + "kts");
+                const forecastHumidity = $('<p>').text("Humidity: " + newData[i].main.humidity.toFixed(1)  + "%");
 
                 //extract current day from dt property of newData array
-                var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
               
-                var d = new Date(newData[i].dt * 1000);
-                var dayName = days[d.getDay()];
+                const d = new Date(newData[i].dt * 1000);
+                const dayName = days[d.getDay()];
                 
                 //append required info to card body
                 forecastDiv.append(weatherForecast);
